@@ -1,0 +1,6 @@
+archivista.egg-info/
+build/
+dist/
+__pycache__
+.pypirc
+*.pyc
