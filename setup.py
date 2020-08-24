@@ -5,7 +5,7 @@ with open('README.md', 'r') as puntero:
 
 setuptools.setup(
     name='archivista',
-    version='0.3.2',
+    version='0.3.1',
     author='Guillermo Valdes Lozano',
     author_email='guillermo@movimientolibre.com',
     description='Transformador de contenidos para Pelican',
@@ -21,8 +21,8 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     include_package_data=True,
     install_requires=[
-        'Click',
-        'jinja2',
+        'click',
+        'Jinja2',
         'Markdown',
     ],
     entry_points="""
