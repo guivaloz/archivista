@@ -10,8 +10,10 @@ class Config(object):
         self.rama = ''
         self.almacen_frio_url = ''
         self.descargables_extensiones = []
+        self.eliminar_content_rama = False
         self.fecha_por_defecto = ''
         self.imagenes_extensiones = []
+        self.indice_maximo_elementos_como_encabezado = 8
         self.nextcloud_ruta = ''
         self.pelican_ruta = ''
         self.plantillas_ruta = ''
@@ -35,8 +37,10 @@ class Config(object):
         try:
             self.almacen_frio_url = settings['DEFAULT']['almacen_frio']
             self.descargables_extensiones = settings['DEFAULT']['descargables_extensiones'].split(',')
+            self.eliminar_content_rama = settings['DEFAULT'].getboolean('eliminar_content_rama')
             self.fecha_por_defecto = settings['DEFAULT']['fecha_por_defecto']
             self.imagenes_extensiones = settings['DEFAULT']['imagenes_extensiones'].split(',')
+            self.indice_maximo_elementos_como_encabezado = int(settings['DEFAULT']['indice_maximo_elementos_como_encabezado'])
             self.nextcloud_ruta = settings['DEFAULT']['nextcloud_ruta']
             self.pelican_ruta = settings['DEFAULT']['pelican_ruta']
             self.plantillas_ruta = settings['DEFAULT']['plantillas_ruta']

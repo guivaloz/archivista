@@ -1,5 +1,7 @@
+import shutil
 from pathlib import Path
 from archivista.universales.base import Base
+from archivista.universales.funciones import cambiar_a_ruta_segura
 from archivista.universales.pagina import Pagina
 
 
@@ -39,6 +41,12 @@ class Rama(Base):
 
     def crear(self):
         """ Crear """
+        # Eliminar
+        if self.config.eliminar_content_rama:
+            destino_ruta = Path(str(self.config.salida_ruta) + cambiar_a_ruta_segura(self.relativo))
+            if destino_ruta.exists():
+                shutil.rmtree(destino_ruta)
+        # Crear
         lineas = [super().crear()]
         if len(self.paginas) > 0:
             lineas += [pagina.crear() for pagina in self.paginas]

@@ -47,7 +47,7 @@ class Indice(object):
         """ Contenido entrega texto markdown """
         if self.ya_alimentado and self.vinculos is not None:
             lineas = []
-            if len(self.vinculos) > 8:
+            if len(self.vinculos) > self.config.indice_maximo_elementos_como_encabezado:
                 for etiqueta, relativo in self.vinculos.items():
                     lineas.append(f'- [{etiqueta}]({relativo})')
                 lineas.append('')
