@@ -23,6 +23,7 @@ class SeccionDescargables(object):
             items = []
             for extension in self.config.descargables_extensiones:
                 items.extend(list(self.ruta.glob(f'*.{extension}')))
+            items.sort()
             # ¿Hay o no hay?
             if len(items) > 0:
                 self.contenidos = []

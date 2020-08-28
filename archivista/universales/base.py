@@ -20,6 +20,7 @@ class Base(object):
         self.nivel = 0
         self.ya_alimentado = False
         self.secciones = []
+        self.oculto = True  # Si verdadero pondrá el estatus en Draft
         self.plantilla = None
         # Definir la ruta relativa donde estamos respecto al depósito
         self.relativo = str(self.ruta)[len(str(self.config.nextcloud_ruta)):]
@@ -31,6 +32,7 @@ class Base(object):
             seccion_inicial = SeccionInicial(self.config, self.ruta, self.nivel + 1)
             if seccion_inicial.alimentar():
                 self.secciones.append(seccion_inicial)
+                self.oculto = False
             # Sección Descargables
             seccion_descargables = SeccionDescargables(self.config, self.ruta, self.nivel + 1)
             if seccion_descargables.alimentar():
@@ -75,6 +77,10 @@ class Base(object):
         slug = cambiar_a_identificador(self.relativo[1:])  # Le quitamos el primer caracter que siempre es una diagonal
         url = cambiar_a_ruta_segura(self.relativo[1:] + '/')
         guardar_como = url + 'index.html'
+        if self.oculto:
+            status = 'draft'
+        else:
+            status = ''
         # Elaborar contenido con la plantilla
         if self.plantilla is None:
             self.preparar_plantilla()
@@ -87,6 +93,7 @@ class Base(object):
             save_as=guardar_como,
             date=fecha_hora,
             modified=fecha_hora,
+            status=status,
             content=self.contenido(),
         )
         # Crear directorio

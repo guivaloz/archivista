@@ -32,6 +32,7 @@ class SeccionFinal(object):
             # ¿Hay o no hay?
             if len(archivos) > 0:
                 self.contenidos = archivos
+                self.mensaje = 'Con {} archivos'.format(len(archivos))
             # Levantar la bandera
             self.ya_alimentado = True
         # Entregar verdadero si hay

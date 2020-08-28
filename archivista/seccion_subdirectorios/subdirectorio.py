@@ -31,6 +31,7 @@ class Subdirectorio(object):
                 items = []
                 for extension in self.config.descargables_extensiones:
                     items.extend(list(self.ruta.glob(f'*.{extension}')))
+                items.sort()
                 # ¿Hay o no hay?
                 if len(items) > 0:
                     self.contenidos = []
@@ -55,6 +56,7 @@ class Subdirectorio(object):
                 lineas.append('')
                 if self.contenidos is not None:
                     lineas.extend(item.contenido() for item in self.contenidos)
+            lineas.append('')
             return('\n'.join(lineas))
         else:
             return('')
