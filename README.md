@@ -4,7 +4,8 @@ Transformador de contenidos a la estructura y metadatos que requiere Pelican; as
 
 ## Historial de versiones
 
-- 0.3.2 Se reduce a dos parámetros en vez de cuatro y puede eliminar lo previo
-- 0.3.1 Se reestructuró por completo, ahora se configura con settings.ini
-- 0.2 Depende de un archvo CSV para metadatos
-- 0.1 Primeros experimentos
+- 0.3.3 Puede obtener metadatos que estén dentro de los archivos md y varias configuraciones son opcionales
+- 0.3.2 Comando con dos órdenes (mostrar y crear) y puede eliminar lo previo en content
+- 0.3.1 Se reprogramó por completo y ahora se configura con settings.ini
+- 0.2.0 Depende de un archvo CSV para metadatos
+- 0.1.0 Primeros experimentos

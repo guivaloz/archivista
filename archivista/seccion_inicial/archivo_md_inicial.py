@@ -14,6 +14,9 @@ class ArchivoMdInicial(object):
         self.ya_alimentado = False
         self.archivo_md_nombre = None
         self.archivo_md_ruta = None
+        self.ya_procesado = False
+        self.procesado_contenido = ''
+        self.procesado_metadatos = {}
 
     def alimentar(self):
         """ Alimentar """
@@ -35,13 +38,36 @@ class ArchivoMdInicial(object):
         # Entregar verdadero si hay
         return(self.archivo_md_ruta is not None)
 
+    def procesar(self):
+        """ Procesar el archivo md para separar el contenido y los metadatos """
+        if self.ya_procesado is False:
+            if self.ya_alimentado is False:
+                self.alimentar()
+            if self.archivo_md_ruta is not None:
+                with open(str(self.archivo_md_ruta), 'r') as puntero:
+                    renglones = puntero.readlines()
+                    for numero, linea in enumerate(renglones):
+                        kv = linea.split(':', 1)
+                        if len(kv) == 2:
+                            variable = kv[0].lower()
+                            valor = kv[1].strip()
+                            self.procesado_metadatos[variable] = valor
+                        else:
+                            self.procesado_contenido = ''.join(renglones[numero:])
+                            break
+            self.ya_procesado = True
+
     def contenido(self):
         """ Contenido entrega texto markdown """
-        if self.ya_alimentado and self.archivo_md_ruta is not None:
-            with open(str(self.archivo_md_ruta), 'r') as puntero:
-                return(puntero.read())
-        else:
-            return('')
+        if self.ya_procesado is False:
+            self.procesar()
+        return(self.procesado_contenido)
+
+    def metadatos(self):
+        """ Metadatos entrega un diccionario si los tiene """
+        if self.ya_procesado is False:
+            self.procesar()
+        return(self.procesado_metadatos)
 
     def __repr__(self):
         return('  ' * self.nivel + f'<ArchivoMdInicial> {self.archivo_md_nombre}')

@@ -43,11 +43,18 @@ class SeccionInicial(object):
         return(self.contenidos is not None)
 
     def contenido(self):
-        """ Entregar el contenido que es el markdown que está en el archivo """
+        """ Contenido entrega texto markdown """
         if self.contenidos is not None:
             return(self.contenidos.contenido())
         else:
             return('SIN CONTENIDO')  # Esto no debería entregarse
+
+    def metadatos(self):
+        """ Metadatos entrega un diccionario si los tiene """
+        if self.contenidos is not None:
+            return(self.contenidos.metadatos())
+        else:
+            return({})
 
     def __repr__(self):
         lineas = []

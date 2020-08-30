@@ -41,7 +41,7 @@ class SeccionDescargables(object):
         return(self.contenidos is not None)
 
     def contenido(self):
-        """ Entregar el contenido que es texto markdown con las descargas """
+        """ Contenido entrega texto markdown """
         if self.contenidos is not None:
             lineas = []
             lineas.append(f'## {self.mensaje}')
@@ -51,6 +51,10 @@ class SeccionDescargables(object):
             return('\n'.join(lineas))
         else:
             return('SIN DESCARGABLES')  # Esto no debería entregarse
+
+    def metadatos(self):
+        """ Metadatos entrega un diccionario, esta clase no los genera """
+        return({})
 
     def __repr__(self):
         lineas = []

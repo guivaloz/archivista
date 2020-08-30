@@ -39,11 +39,15 @@ class SeccionFinal(object):
         return(self.contenidos is not None)
 
     def contenido(self):
-        """ Contenido """
+        """ Contenido entrega texto markdown """
         if self.contenidos is not None:
             return('\n'.join([archivo.contenido() for archivo in self.contenidos]))
         else:
             return('SIN CONTENIDO')  # Esto no debería entregarse
+
+    def metadatos(self):
+        """ Metadatos entrega un diccionario, esta clase no los genera """
+        return({})
 
     def __repr__(self):
         lineas = []

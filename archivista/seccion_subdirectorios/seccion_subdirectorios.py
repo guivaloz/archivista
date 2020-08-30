@@ -49,11 +49,15 @@ class SeccionSubdirectorios(object):
         return(self.contenidos is not None)
 
     def contenido(self):
-        """ Entregar contenido que es texto markdown """
+        """ Contenido entrega texto markdown """
         if self.contenidos is not None:
             return('\n'.join([subdirectorio.contenido() for subdirectorio in self.contenidos]))
         else:
             return('SIN SUBDIRECTORIOS')  # Esto no debería entregarse
+
+    def metadatos(self):
+        """ Metadatos entrega un diccionario, esta clase no los genera """
+        return({})
 
     def __repr__(self):
         lineas = []

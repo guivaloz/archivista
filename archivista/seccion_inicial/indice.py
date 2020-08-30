@@ -45,6 +45,7 @@ class Indice(object):
 
     def contenido(self):
         """ Contenido entrega texto markdown """
+        contenido = ''
         if self.ya_alimentado and self.vinculos is not None:
             lineas = []
             if len(self.vinculos) > self.config.indice_maximo_elementos_como_encabezado:
@@ -55,9 +56,12 @@ class Indice(object):
                 for etiqueta, relativo in self.vinculos.items():
                     lineas.append('#' * self.nivel + f' [{etiqueta}]({relativo})')
                     lineas.append('')
-            return('\n'.join(lineas))
-        else:
-            return('')
+            contenido = '\n'.join(lineas)
+        return(contenido)
+
+    def metadatos(self):
+        """ Metadatos entrega un diccionario, esta clase no los genera """
+        return({})
 
     def __repr__(self):
         return('  ' * self.nivel + '<Indice>')

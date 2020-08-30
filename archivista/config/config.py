@@ -9,15 +9,15 @@ class Config(object):
     def __init__(self):
         self.rama = ''
         self.almacen_frio_url = ''
-        self.descargables_extensiones = []
-        self.eliminar_content_rama = False
-        self.fecha_por_defecto = ''
-        self.imagenes_extensiones = []
+        self.descargables_extensiones = ['pdf', 'gz', 'zip']
+        self.eliminar_content_rama = True
+        self.fecha_por_defecto = '2020-01-01 00:00'
+        self.imagenes_extensiones = ['gif', 'jpg', 'jpeg', 'png', 'svg']
         self.indice_maximo_elementos_como_encabezado = 8
         self.nextcloud_ruta = ''
         self.pelican_ruta = ''
         self.plantillas_ruta = ''
-        self.plantilla = ''
+        self.plantilla = 'pelican.md.jinja2'
         self.titulo = ''
         self.insumos_ruta = ''
         self.salida_ruta = ''
@@ -34,20 +34,40 @@ class Config(object):
         self.rama = validar_rama(rama)
         settings = configparser.ConfigParser()
         settings.read('settings.ini')
+        # Obligatorios
         try:
             self.almacen_frio_url = settings['DEFAULT']['almacen_frio']
-            self.descargables_extensiones = settings['DEFAULT']['descargables_extensiones'].split(',')
-            self.eliminar_content_rama = settings['DEFAULT'].getboolean('eliminar_content_rama')
-            self.fecha_por_defecto = settings['DEFAULT']['fecha_por_defecto']
-            self.imagenes_extensiones = settings['DEFAULT']['imagenes_extensiones'].split(',')
-            self.indice_maximo_elementos_como_encabezado = int(settings['DEFAULT']['indice_maximo_elementos_como_encabezado'])
-            self.nextcloud_ruta = settings['DEFAULT']['nextcloud_ruta']
-            self.pelican_ruta = settings['DEFAULT']['pelican_ruta']
-            self.plantillas_ruta = settings['DEFAULT']['plantillas_ruta']
-            self.plantilla = settings['DEFAULT']['plantilla']
-            self.titulo = settings[self.rama]['titulo']
         except KeyError:
-            raise Exception(f'ERROR: Falta configuración en settings.ini para la rama {self.rama}')
+            raise Exception(f'ERROR: Falta configurar almacen_frio en settings.ini')
+        try:
+            self.nextcloud_ruta = settings['DEFAULT']['nextcloud_ruta']
+        except KeyError:
+            raise Exception(f'ERROR: Falta configurar nextcloud_ruta en settings.ini')
+        try:
+            self.pelican_ruta = settings['DEFAULT']['pelican_ruta']
+        except KeyError:
+            raise Exception(f'ERROR: Falta configurar pelican_ruta en settings.ini')
+        try:
+            self.plantillas_ruta = settings['DEFAULT']['plantillas_ruta']
+        except KeyError:
+            raise Exception(f'ERROR: Falta configurar plantillas_ruta en settings.ini')
+        # Opcionales
+        if 'eliminar_content_rama' in settings[self.rama]:
+            self.eliminar_content_rama = settings[self.rama].getboolean('eliminar_content_rama')
+        if 'descargables_extensiones' in settings[self.rama]:
+            self.descargables_extensiones = settings[self.rama]['descargables_extensiones'].split(',')
+        if 'fecha_por_defecto' in settings[self.rama]:
+            self.fecha_por_defecto = settings[self.rama]['fecha_por_defecto']
+        if 'imagenes_extensiones' in settings[self.rama]:
+            self.imagenes_extensiones = settings[self.rama]['imagenes_extensiones'].split(',')
+        if 'indice_maximo_elementos_como_encabezado' in settings[self.rama]:
+            self.indice_maximo_elementos_como_encabezado = int(settings[self.rama]['indice_maximo_elementos_como_encabezado'])
+        if 'plantilla' in settings[self.rama]:
+            self.plantilla = settings[self.rama]['plantilla']
+        if 'titulo' in settings[self.rama]:
+            self.titulo = settings[self.rama]['titulo']
+        else:
+            self.titulo = self.rama.capitalize()
         # Validar la ruta de insumos desde Archivista
         self.insumos_ruta = Path(f'{self.nextcloud_ruta}/{self.titulo}')
         if not self.insumos_ruta.exists() or not self.insumos_ruta.is_dir():

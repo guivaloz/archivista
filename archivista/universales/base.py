@@ -49,11 +49,54 @@ class Base(object):
         return(len(self.secciones) > 0)
 
     def contenido(self):
-        """ Entregar contenido que es texto markdown """
+        """ Contenido entrega texto markdown """
         if len(self.secciones) > 0:
             return('\n'.join([seccion.contenido() for seccion in self.secciones]))
         else:
             return('NO HAY CONTENIDO')  # Esto no debería entregarse
+
+    def metadatos(self):
+        """ Metadatos entrega un diccionario si los tiene """
+        resumen = ''
+        categoria = self.config.titulo
+        # Primero a partir del nombre del archivo
+        nombre = self.ruta.parts[-1]
+        creado, titulo = obtener_metadatos_del_nombre(nombre, self.config.fecha_por_defecto)
+        modificado = creado
+        slug = cambiar_a_identificador(self.relativo[1:])  # Le quitamos el primer caracter que siempre es una diagonal
+        url = cambiar_a_ruta_segura(self.relativo[1:] + '/')
+        guardar_como = url + 'index.html'
+        if self.oculto:
+            estado = 'draft'
+        else:
+            estado = ''
+        # Segundo a partir de las líneas en el archivo md
+        for seccion in self.secciones:
+            metadatos = seccion.metadatos()
+            if 'title' in metadatos:
+                titulo = metadatos['title']
+            if 'summary' in metadatos:
+                resumen = metadatos['summary']
+            if 'category' in metadatos:
+                categoria = metadatos['category']
+            if 'date' in metadatos:
+                creado = metadatos['date']
+            if 'modified' in metadatos:
+                modificado = metadatos['modified']
+            if 'status' in metadatos:
+                estado = metadatos['status']
+        # Tercero a partir del archivo CSV
+        return({
+            'title': titulo,
+            'slug': slug,
+            'summary': resumen,
+            'category': categoria,
+            'url': url,
+            'save_as': guardar_como,
+            'date': creado,
+            'modified': modificado,
+            'status': estado,
+        })
 
     def preparar_plantilla(self):
         """ Preparar la plantilla Jinja2 """
@@ -71,31 +114,12 @@ class Base(object):
 
     def crear(self):
         """ Crear archivo md """
-        # Metadatos
-        nombre = self.ruta.parts[-1]
-        fecha_hora, titulo = obtener_metadatos_del_nombre(nombre, self.config.fecha_por_defecto)
-        slug = cambiar_a_identificador(self.relativo[1:])  # Le quitamos el primer caracter que siempre es una diagonal
-        url = cambiar_a_ruta_segura(self.relativo[1:] + '/')
-        guardar_como = url + 'index.html'
-        if self.oculto:
-            status = 'draft'
-        else:
-            status = ''
         # Elaborar contenido con la plantilla
         if self.plantilla is None:
             self.preparar_plantilla()
-        content = self.plantilla.render(
-            title=titulo,
-            slug=slug,
-            summary='.',
-            category=self.config.titulo,
-            url=url,
-            save_as=guardar_como,
-            date=fecha_hora,
-            modified=fecha_hora,
-            status=status,
-            content=self.contenido(),
-        )
+        ingredientes = self.metadatos()  # Entrega un diccionario
+        ingredientes['content'] = self.contenido()
+        cocinado = self.plantilla.render(**ingredientes)
         # Crear directorio
         destino_directorio_ruta = Path(str(self.config.salida_ruta) + cambiar_a_ruta_segura(self.relativo))
         destino_directorio_ruta.mkdir(parents=True, exist_ok=True)
@@ -103,7 +127,7 @@ class Base(object):
         nombre = cambiar_a_ruta_segura(self.ruta.parts[-1])
         destino_md_ruta = Path(destino_directorio_ruta, f'{nombre}.md')
         with open(destino_md_ruta, 'w') as puntero:
-            puntero.write(content)
+            puntero.write(cocinado)
         # Copiar imágenes
         imagenes_rutas = []
         for extension in self.config.imagenes_extensiones:
