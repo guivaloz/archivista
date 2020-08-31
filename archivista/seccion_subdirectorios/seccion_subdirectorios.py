@@ -18,7 +18,7 @@ class SeccionSubdirectorios(object):
 
     def rastrear_directorios(self, ruta, nivel):
         """ Rastrear directorios """
-        for item in ruta.glob('*'):
+        for item in sorted(ruta.glob('*')):
             if item.is_dir():
                 # Si tiene dentro un archivo <directorio>.md se omite
                 nombre = item.parts[-1]

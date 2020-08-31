@@ -48,15 +48,20 @@ class Subdirectorio(object):
         """ Contenido entrega texto markdown """
         if self.ya_alimentado:
             lineas = []
-            if self.contenidos is not None and len(self.contenidos) == 1 and isinstance(self.contenidos[0], VinculoRelativo):
-                lineas.append(self.contenidos[0].contenido())
-            else:
+            if self.contenidos is None:
                 lineas.append('')
                 lineas.append('#' * self.nivel + ' ' + self.nombre)
                 lineas.append('')
-                if self.contenidos is not None:
-                    lineas.extend(item.contenido() for item in self.contenidos)
-            lineas.append('')
+            else:
+                if len(self.contenidos) == 1 and isinstance(self.contenidos[0], VinculoRelativo):
+                    lineas.append(self.contenidos[0].contenido())
+                else:
+                    lineas.append('')
+                    lineas.append('#' * self.nivel + ' ' + self.nombre)
+                    lineas.append('')
+                    for item in self.contenidos:
+                        lineas.append(item.contenido())
+                    lineas.append('')
             return('\n'.join(lineas))
         else:
             return('')
