@@ -48,7 +48,7 @@ class ArchivoMdInicial(object):
                     renglones = puntero.readlines()
                     for numero, linea in enumerate(renglones):
                         kv = linea.split(':', 1)
-                        if len(kv) == 2:
+                        if len(kv) == 2 and kv[0].lower() in ['title', 'summary', 'category', 'date', 'modified', 'status']:
                             variable = kv[0].lower()
                             valor = kv[1].strip()
                             self.procesado_metadatos[variable] = valor
