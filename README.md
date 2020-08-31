@@ -4,6 +4,7 @@ Transformador de contenidos a la estructura y metadatos que requiere Pelican; as
 
 ## Historial de versiones
 
+- 0.3.4 Al obtener metadatos de los archivos md se evitan variables desconocidas
 - 0.3.3 Puede obtener metadatos que estén dentro de los archivos md y varias configuraciones son opcionales
 - 0.3.2 Comando con dos órdenes (mostrar y crear) y puede eliminar lo previo en content
 - 0.3.1 Se reprogramó por completo y ahora se configura con settings.ini
