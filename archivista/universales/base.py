@@ -80,12 +80,13 @@ class Base(object):
             if 'category' in metadatos:
                 categoria = metadatos['category']
             if 'date' in metadatos:
-                creado = metadatos['date']
+                creado = modificado = metadatos['date']
             if 'modified' in metadatos:
                 modificado = metadatos['modified']
             if 'status' in metadatos:
                 estado = metadatos['status']
         # Tercero a partir del archivo CSV
+        # Entregar
         return({
             'title': titulo,
             'slug': slug,
