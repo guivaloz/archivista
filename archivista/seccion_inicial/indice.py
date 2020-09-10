@@ -17,7 +17,7 @@ class Indice(object):
 
     def rastrear_archivos_iniciales_md(self, ruta, nivel):
         """ Rastrear archivos iniciales md """
-        for item in ruta.glob('*'):
+        for item in sorted(ruta.glob('*')):
             if item.is_dir():
                 # Si tiene dentro un archivo <directorio>.md se incluye
                 nombre = item.parts[-1]

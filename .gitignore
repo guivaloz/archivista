@@ -1,5 +1,9 @@
-archivista.egg-info/
+.directory
+.vscode
+.~lock.*
+__pycache__/
+*.egg-info/
+*.pyc
+settings.ini
 build/
 dist/
-__pycache__
-*.pyc

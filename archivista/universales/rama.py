@@ -15,7 +15,7 @@ class Rama(Base):
 
     def rastrear_directorios_con_md_igual(self, ruta):
         """ Rastrear directorios con archivos.md de igual nombre que el directorio """
-        for item in ruta.glob('*'):
+        for item in sorted(ruta.glob('*')):
             if item.is_dir():
                 # Si tiene dentro un archivo <directorio>.md se acumula
                 posible_md_nombre = item.parts[-1] + '.md'
