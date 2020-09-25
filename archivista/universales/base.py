@@ -85,7 +85,6 @@ class Base(object):
                 modificado = metadatos['modified']
             if 'status' in metadatos:
                 estado = metadatos['status']
-        # Tercero a partir del archivo CSV
         # Entregar
         return({
             'title': titulo,

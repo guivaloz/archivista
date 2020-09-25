@@ -50,7 +50,8 @@ class Rama(Base):
         lineas = [super().crear()]
         if len(self.paginas) > 0:
             lineas += [pagina.crear() for pagina in self.paginas]
-        return('  ' * self.nivel + '\n'.join(lineas))
+        # return('  ' * self.nivel + '\n'.join(lineas))
+        return('  ' * self.nivel + 'Se crearon {} archivos con {}'.format(len(lineas), self.relativo))
 
     def __repr__(self):
         lineas = []
