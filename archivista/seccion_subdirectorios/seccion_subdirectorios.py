@@ -16,7 +16,7 @@ class SeccionSubdirectorios(object):
         self.ya_alimentado = False
         self.contenidos = None
         self.mensaje = 'NO ALIMENTADO'
-        self.patron_fecha = re.compile(r'^\d{4}(-\d\d(-\d\d)?)?')
+        self.patron_fecha = re.compile(r'\d{4}(-\d\d(-\d\d)?)?')
 
     def rastrear_directorios(self, ruta, nivel):
         """ Rastrear directorios """
@@ -26,7 +26,7 @@ class SeccionSubdirectorios(object):
         for item in ruta.glob('*'):
             if item.is_dir():
                 elementos.append(item)
-                if self.patron_fecha.match(item.name) is None:
+                if self.patron_fecha.search(item.name) is None:
                     son_fechas = False
         # ...se ordenan al revés
         if son_fechas:
