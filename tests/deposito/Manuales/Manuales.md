@@ -1,2 +1,2 @@
-
-Aquí podrá consultar los manuales clasificados por orden cronológico.
+Title: Manuales
+Summary: Guías de implementación de software o hardware.

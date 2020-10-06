@@ -7,7 +7,7 @@ from archivista.universales.rama import Rama
 @click.group()
 @pass_config
 def cli(config):
-    click.echo('Archivista versión 0.3.6')
+    click.echo('Archivista versión 0.3.7')
 
 
 @cli.command()

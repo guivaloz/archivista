@@ -1,3 +1,4 @@
+import re
 from pathlib import Path
 from archivista.seccion_subdirectorios.subdirectorio import Subdirectorio
 
@@ -15,10 +16,25 @@ class SeccionSubdirectorios(object):
         self.ya_alimentado = False
         self.contenidos = None
         self.mensaje = 'NO ALIMENTADO'
+        self.patron_fecha = re.compile(r'^\d{4}(-\d\d(-\d\d)?)?')
 
     def rastrear_directorios(self, ruta, nivel):
         """ Rastrear directorios """
-        for item in sorted(ruta.glob('*')):
+        # Si los nombres de los directorios son AAAA, AAAA-MM o AAAA-MM-DD...
+        son_fechas = True
+        elementos = []
+        for item in ruta.glob('*'):
+            if item.is_dir():
+                elementos.append(item)
+                if self.patron_fecha.match(item.name) is None:
+                    son_fechas = False
+        # ...se ordenan al revés
+        if son_fechas:
+            ordenados = sorted(elementos, reverse=True)
+        else:
+            ordenados = sorted(elementos)
+        # Bucle
+        for item in ordenados:
             if item.is_dir():
                 # Si tiene dentro un archivo <directorio>.md se omite
                 nombre = item.parts[-1]

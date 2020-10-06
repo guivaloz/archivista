@@ -6,6 +6,7 @@ para generar los directorios y archivos en _content_.
 
 ## Historial de versiones
 
+- 0.3.7 Los subdirectorios con fecha se ordenan del más reciente al más pasado
 - 0.3.6 Al crear los mensajes son cuantitativos
 - 0.3.5 Orden ascendente en subdirectorios e índices
 - 0.3.4 Descarta metadatos desconocidos en los archivos md
