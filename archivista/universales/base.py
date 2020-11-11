@@ -1,14 +1,19 @@
+"""
+Archivista, Universal, Base
+"""
 import shutil
 from pathlib import Path
 from jinja2 import Environment, FileSystemLoader
+
 from archivista.universales.funciones import cambiar_a_identificador, cambiar_a_ruta_segura, obtener_metadatos_del_nombre
+from archivista.seccion_breadcrumb.seccion_breadcrumb import SeccionBreadcrumb
 from archivista.seccion_inicial.seccion_inicial import SeccionInicial
 from archivista.seccion_descargables.seccion_descargables import SeccionDescargables
 from archivista.seccion_subdirectorios.seccion_subdirectorios import SeccionSubdirectorios
 from archivista.seccion_final.seccion_final import SeccionFinal
 
 
-class Base(object):
+class Base():
     """ Base """
 
     def __init__(self, config, ruta):
@@ -28,6 +33,9 @@ class Base(object):
     def alimentar(self):
         """ Alimentar """
         if self.ya_alimentado is False:
+            # Sección Breadcrumb
+            seccion_breadcrumb = SeccionBreadcrumb(self.config, self.ruta, self.nivel + 1)
+            self.secciones.append(seccion_breadcrumb)
             # Sección Inicial
             seccion_inicial = SeccionInicial(self.config, self.ruta, self.nivel + 1)
             if seccion_inicial.alimentar():
@@ -46,14 +54,13 @@ class Base(object):
             if seccion_final.alimentar():
                 self.secciones.append(seccion_final)
         # Entregar verdadero si hay secciones
-        return(len(self.secciones) > 0)
+        return len(self.secciones) > 0
 
     def contenido(self):
         """ Contenido entrega texto markdown """
         if len(self.secciones) > 0:
-            return('\n'.join([seccion.contenido() for seccion in self.secciones]))
-        else:
-            return('NO HAY CONTENIDO')  # Esto no debería entregarse
+            return '\n'.join([seccion.contenido() for seccion in self.secciones])
+        return 'NO HAY CONTENIDO'  # Esto no debería entregarse
 
     def metadatos(self):
         """ Metadatos entrega un diccionario si los tiene """
@@ -86,7 +93,7 @@ class Base(object):
             if 'status' in metadatos:
                 estado = metadatos['status']
         # Entregar
-        return({
+        return {
             'title': titulo,
             'slug': slug,
             'summary': resumen,
@@ -96,7 +103,7 @@ class Base(object):
             'date': creado,
             'modified': modificado,
             'status': estado,
-        })
+        }
 
     def preparar_plantilla(self):
         """ Preparar la plantilla Jinja2 """
@@ -104,7 +111,7 @@ class Base(object):
             # Preparar plantilla
             plantillas_ruta = Path(self.config.plantillas_ruta)
             if not(plantillas_ruta.exists() or plantillas_ruta.is_dir()):
-                raise(Exception('ERROR: No existe el directorio de plantillas'))
+                raise Exception('ERROR: No existe el directorio de plantillas')
             plantillas_env = Environment(
                 loader=FileSystemLoader(str(plantillas_ruta)),
                 trim_blocks=True,
@@ -135,7 +142,7 @@ class Base(object):
         for imagen_ruta in imagenes_rutas:
             shutil.copyfile(imagen_ruta, Path(destino_directorio_ruta, imagen_ruta.name))
         # Entregar línea para la terminal
-        return(str(destino_md_ruta)[len(str(self.config.salida_ruta)):])
+        return str(destino_md_ruta)[len(str(self.config.salida_ruta)):]
 
     def __repr__(self):
-        return('  ' * self.nivel + f'<Base> {self.relativo}')
+        return '  ' * self.nivel + f'<Base> {self.relativo}'

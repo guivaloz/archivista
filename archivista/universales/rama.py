@@ -1,3 +1,6 @@
+"""
+Archivista, Universal, Rama
+"""
 import shutil
 from pathlib import Path
 from archivista.universales.base import Base
@@ -37,7 +40,7 @@ class Rama(Base):
             # Levantar bandera
             self.ya_alimentado = True
         # Entregar verdadero si hay secciones o páginas
-        return(hay_secciones or len(self.paginas) > 0)
+        return hay_secciones or len(self.paginas) > 0
 
     def crear(self):
         """ Crear """
@@ -51,13 +54,14 @@ class Rama(Base):
         if len(self.paginas) > 0:
             lineas += [pagina.crear() for pagina in self.paginas]
         # return('  ' * self.nivel + '\n'.join(lineas))
-        return('  ' * self.nivel + 'Se crearon {} archivos con {}'.format(len(lineas), self.relativo))
+        return '  ' * self.nivel + 'Se crearon {} archivos con {}'.format(len(lineas), self.relativo)
 
     def __repr__(self):
+        """ Representación """
         lineas = []
         lineas.append(f'<Rama> {self.relativo}')
         if len(self.secciones) > 0:
             lineas.extend([repr(seccion) for seccion in self.secciones])
         if len(self.paginas) > 0:
             lineas.extend([repr(pagina) for pagina in self.paginas])
-        return('  ' * self.nivel + '\n'.join(lineas))
+        return '  ' * self.nivel + '\n'.join(lineas)

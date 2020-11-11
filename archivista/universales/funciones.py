@@ -1,3 +1,6 @@
+"""
+Archivista, Universal, Funciones
+"""
 import re
 import unicodedata
 from datetime import datetime
@@ -8,7 +11,7 @@ def cambiar_acentos(text):
     text = unicodedata.normalize('NFD', text)
     text = text.encode('ascii', 'ignore')
     text = text.decode("utf-8")
-    return(str(text))
+    return str(text)
 
 
 def cambiar_a_ruta_segura(text):
@@ -16,7 +19,7 @@ def cambiar_a_ruta_segura(text):
     text = cambiar_acentos(text.lower())
     text = re.sub('[ ]+', '-', text)
     text = re.sub('[^0-9a-zA-Z_/-]', '', text)
-    return(text)
+    return text
 
 
 def cambiar_a_identificador(text):
@@ -25,12 +28,12 @@ def cambiar_a_identificador(text):
     text = re.sub('[/]+', '-', text)
     text = re.sub('[ ]+', '-', text)
     text = re.sub('[^0-9a-zA-Z_-]', '', text)
-    return(text)
+    return text
 
 
 def validar_rama(rama=''):
     """ Validar rama """
-    return(rama.lower())
+    return rama.lower()
 
 
 def obtener_metadatos_del_nombre(nombre, fecha_hora_por_defecto):
@@ -73,4 +76,4 @@ def obtener_metadatos_del_nombre(nombre, fecha_hora_por_defecto):
     else:
         titulo = nombre
         fecha_hora = fecha_hora_por_defecto
-    return(fecha_hora, titulo)
+    return fecha_hora, titulo
