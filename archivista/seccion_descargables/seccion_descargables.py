@@ -1,3 +1,6 @@
+"""
+Archivista, Sección Descargables, SeccionDescargables
+"""
 from pathlib import Path
 from archivista.seccion_descargables.descargable import Descargable
 
@@ -38,7 +41,7 @@ class SeccionDescargables(object):
             # Levantar la bandera
             self.ya_alimentado = True
         # Entregar verdadero si hay
-        return(self.contenidos is not None)
+        return self.contenidos is not None
 
     def contenido(self):
         """ Contenido entrega texto markdown """
@@ -48,17 +51,17 @@ class SeccionDescargables(object):
             lineas.append('')
             lineas.extend(descargable.contenido() for descargable in self.contenidos)
             lineas.append('')
-            return('\n'.join(lineas))
-        else:
-            return('SIN DESCARGABLES')  # Esto no debería entregarse
+            return '\n'.join(lineas)
+        return 'SIN DESCARGABLES'  # Esto no debería entregarse
 
     def metadatos(self):
         """ Metadatos entrega un diccionario, esta clase no los genera """
-        return({})
+        return {}
 
     def __repr__(self):
+        """ Representación """
         lineas = []
         lineas.append(f'<SeccionDescargables> {self.mensaje}')
         if self.contenidos is not None:
             lineas.extend([repr(descargable) for descargable in self.contenidos])
-        return('  ' * self.nivel + '\n'.join(lineas))
+        return '  ' * self.nivel + '\n'.join(lineas)

@@ -35,7 +35,8 @@ class Base():
         if self.ya_alimentado is False:
             # Sección Breadcrumb
             seccion_breadcrumb = SeccionBreadcrumb(self.config, self.ruta, self.nivel + 1)
-            self.secciones.append(seccion_breadcrumb)
+            if seccion_breadcrumb.alimentar():
+                self.secciones.append(seccion_breadcrumb)
             # Sección Inicial
             seccion_inicial = SeccionInicial(self.config, self.ruta, self.nivel + 1)
             if seccion_inicial.alimentar():
@@ -57,7 +58,7 @@ class Base():
         return len(self.secciones) > 0
 
     def contenido(self):
-        """ Contenido entrega texto markdown """
+        """ Entregar el contenido de todas las secciones """
         if len(self.secciones) > 0:
             return '\n'.join([seccion.contenido() for seccion in self.secciones])
         return 'NO HAY CONTENIDO'  # Esto no debería entregarse

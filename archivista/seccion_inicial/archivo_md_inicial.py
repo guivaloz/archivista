@@ -1,7 +1,10 @@
+"""
+Archivista, Sección Inicial, ArchivoMdInicial
+"""
 from pathlib import Path
 
 
-class ArchivoMdInicial(object):
+class ArchivoMdInicial():
     """ Archivo md inicial """
 
     def __init__(self, config, ruta, nivel):
@@ -36,7 +39,7 @@ class ArchivoMdInicial(object):
             # Levantar bandera
             self.ya_alimentado = True
         # Entregar verdadero si hay
-        return(self.archivo_md_ruta is not None)
+        return self.archivo_md_ruta is not None
 
     def procesar(self):
         """ Procesar el archivo md para separar el contenido y los metadatos """
@@ -61,13 +64,14 @@ class ArchivoMdInicial(object):
         """ Contenido entrega texto markdown """
         if self.ya_procesado is False:
             self.procesar()
-        return(self.procesado_contenido)
+        return self.procesado_contenido
 
     def metadatos(self):
         """ Metadatos entrega un diccionario si los tiene """
         if self.ya_procesado is False:
             self.procesar()
-        return(self.procesado_metadatos)
+        return self.procesado_metadatos
 
     def __repr__(self):
-        return('  ' * self.nivel + f'<ArchivoMdInicial> {self.archivo_md_nombre}')
+        """ Representación """
+        return '  ' * self.nivel + f'<ArchivoMdInicial> {self.archivo_md_nombre}'

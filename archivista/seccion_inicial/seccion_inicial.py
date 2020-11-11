@@ -1,9 +1,12 @@
+"""
+Archivista, Sección Inicial, SeccionInicial
+"""
 from pathlib import Path
 from archivista.seccion_inicial.archivo_md_inicial import ArchivoMdInicial
 from archivista.seccion_inicial.indice import Indice
 
 
-class SeccionInicial(object):
+class SeccionInicial():
     """ Seccion Inicial """
 
     def __init__(self, config, ruta, nivel):
@@ -36,29 +39,28 @@ class SeccionInicial(object):
                 else:
                     # No hay contenido :(
                     self.contenidos = None
-                    self.mensaje = f'NO EXISTE ARCHIVO MD'
+                    self.mensaje = 'NO EXISTE ARCHIVO MD'
             # Levantar la bandera
             self.ya_alimentado = True
         # Entregar verdadero si hay
-        return(self.contenidos is not None)
+        return self.contenidos is not None
 
     def contenido(self):
         """ Contenido entrega texto markdown """
         if self.contenidos is not None:
-            return(self.contenidos.contenido())
-        else:
-            return('SIN CONTENIDO')  # Esto no debería entregarse
+            return self.contenidos.contenido()
+        return 'SIN CONTENIDO'  # Esto no debería entregarse
 
     def metadatos(self):
         """ Metadatos entrega un diccionario si los tiene """
         if self.contenidos is not None:
-            return(self.contenidos.metadatos())
-        else:
-            return({})
+            return self.contenidos.metadatos()
+        return {}
 
     def __repr__(self):
+        """ Representación """
         lineas = []
         lineas.append(f'<SeccionInicial> {self.mensaje}')
         if self.contenidos is not None:
             lineas.append(repr(self.contenidos))
-        return('  ' * self.nivel + '\n'.join(lineas))
+        return '  ' * self.nivel + '\n'.join(lineas)

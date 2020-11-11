@@ -8,4 +8,6 @@ __pycache__/
 /settings.ini
 /build/
 /dist/
+/tests/content/
+/tests/output/
 /venv/

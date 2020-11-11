@@ -1,8 +1,11 @@
+"""
+Archivista, Sección Inicial, Indice
+"""
 from pathlib import Path
 from archivista.universales.funciones import cambiar_a_ruta_segura
 
 
-class Indice(object):
+class Indice():
     """ Indice """
 
     def __init__(self, config, ruta, nivel):
@@ -41,7 +44,7 @@ class Indice(object):
             # Levantar bandera
             self.ya_alimentado = True
         # Entregar verdadero si hay
-        return(self.vinculos is not None)
+        return self.vinculos is not None
 
     def contenido(self):
         """ Contenido entrega texto markdown """
@@ -57,11 +60,12 @@ class Indice(object):
                     lineas.append('#' * self.nivel + f' [{etiqueta}]({relativo})')
                     lineas.append('')
             contenido = '\n'.join(lineas)
-        return(contenido)
+        return contenido
 
     def metadatos(self):
         """ Metadatos entrega un diccionario, esta clase no los genera """
-        return({})
+        return {}
 
     def __repr__(self):
-        return('  ' * self.nivel + '<Indice>')
+        """ Representación """
+        return '  ' * self.nivel + '<Indice>'

@@ -1,5 +1,8 @@
-import click
+"""
+Archivista
+"""
 import sys
+import click
 from archivista.config.config import pass_config
 from archivista.universales.rama import Rama
 
@@ -7,7 +10,8 @@ from archivista.universales.rama import Rama
 @click.group()
 @pass_config
 def cli(config):
-    click.echo('Archivista versión 0.3.8')
+    """ Grupo de órdenes click """
+    click.echo('Archivista versión 0.4.1')
 
 
 @cli.command()
