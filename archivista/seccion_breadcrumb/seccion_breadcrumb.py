@@ -28,8 +28,9 @@ class SeccionBreadcrumb():
         else:
             objetivo = Path(self.ruta)
         objetivo_partes = objetivo.parts
-        # Partes relativas al objetivo
-        if len(objetivo_partes) > len(deposito_partes):
+        # Partes relativas al objetivo,
+        # se suma uno para que NO haya breadcrumbs con una opción
+        if len(objetivo_partes) > len(deposito_partes) + 1:
             self.relativo_partes = objetivo_partes[len(deposito_partes):]
         # Entregar falso si no hay partes relativas
         return self.relativo_partes is not None

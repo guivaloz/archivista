@@ -6,6 +6,7 @@ para generar los directorios y archivos en _content_.
 
 ## Historial de versiones
 
+- 0.4.2 Cuando hay un elemento se omite el breadcrumb
 - 0.4.1 Breadcrumb
 - 0.3.8 Los subdirectorios con fecha la pueden tener en cualquier parte
 - 0.3.7 Los subdirectorios con fecha se ordenan del más reciente al más pasado
