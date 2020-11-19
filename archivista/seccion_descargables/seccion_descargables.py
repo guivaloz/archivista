@@ -5,7 +5,7 @@ from pathlib import Path
 from archivista.seccion_descargables.descargable import Descargable
 
 
-class SeccionDescargables(object):
+class SeccionDescargables():
     """ Seccion Descargables """
 
     def __init__(self, config, ruta, nivel):

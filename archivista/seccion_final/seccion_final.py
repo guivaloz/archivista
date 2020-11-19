@@ -1,8 +1,11 @@
+"""
+Archivista, Sección Final, SeccionFinal
+"""
 from pathlib import Path
 from archivista.seccion_final.archivo_md import ArchivoMd
 
 
-class SeccionFinal(object):
+class SeccionFinal():
     """ Seccion Final """
 
     def __init__(self, config, ruta, nivel):
@@ -36,22 +39,22 @@ class SeccionFinal(object):
             # Levantar la bandera
             self.ya_alimentado = True
         # Entregar verdadero si hay
-        return(self.contenidos is not None)
+        return self.contenidos is not None
 
     def contenido(self):
         """ Contenido entrega texto markdown """
         if self.contenidos is not None:
-            return('\n'.join([archivo.contenido() for archivo in self.contenidos]))
-        else:
-            return('SIN CONTENIDO')  # Esto no debería entregarse
+            return '\n'.join([archivo.contenido() for archivo in self.contenidos])
+        return 'SIN CONTENIDO'  # Esto no debería entregarse
 
     def metadatos(self):
         """ Metadatos entrega un diccionario, esta clase no los genera """
-        return({})
+        return {}
 
     def __repr__(self):
+        """ Representación """
         lineas = []
         lineas.append(f'<SeccionFinal> {self.mensaje}')
         if self.contenidos is not None:
             lineas.extend([repr(archivo) for archivo in self.contenidos])
-        return('  ' * self.nivel + '\n'.join(lineas))
+        return '  ' * self.nivel + '\n'.join(lineas)

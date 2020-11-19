@@ -65,9 +65,8 @@ class Base():
 
     def metadatos(self):
         """ Metadatos entrega un diccionario si los tiene """
-        resumen = ''
-        categoria = self.config.titulo
         # Primero a partir del nombre del archivo
+        categoria = self.config.titulo
         nombre = self.ruta.parts[-1]
         creado, titulo = obtener_metadatos_del_nombre(nombre, self.config.fecha_por_defecto)
         modificado = creado
@@ -78,6 +77,9 @@ class Base():
             estado = 'draft'
         else:
             estado = ''
+        resumen = ''
+        previa = ''
+        etiquetas = ''
         # Segundo a partir de las líneas en el archivo md
         for seccion in self.secciones:
             metadatos = seccion.metadatos()
@@ -93,17 +95,23 @@ class Base():
                 modificado = metadatos['modified']
             if 'status' in metadatos:
                 estado = metadatos['status']
+            if 'preview' in metadatos:
+                previa = metadatos['preview']
+            if 'tags' in metadatos:
+                etiquetas = metadatos['tags']
         # Entregar
         return {
             'title': titulo,
             'slug': slug,
             'summary': resumen,
             'category': categoria,
+            'tags': etiquetas,
             'url': url,
             'save_as': guardar_como,
             'date': creado,
             'modified': modificado,
             'status': estado,
+            'preview': previa,
         }
 
     def preparar_plantilla(self):

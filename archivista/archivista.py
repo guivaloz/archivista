@@ -11,7 +11,7 @@ from archivista.universales.rama import Rama
 @pass_config
 def cli(config):
     """ Grupo de órdenes click """
-    click.echo('Archivista versión 0.4.2')
+    click.echo('Archivista versión 0.4.3')
 
 
 @cli.command()

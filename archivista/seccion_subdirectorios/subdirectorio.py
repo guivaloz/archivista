@@ -1,9 +1,12 @@
+"""
+Archivista, Sección Subdirectorios, Subdirectorio
+"""
 from pathlib import Path
 from archivista.seccion_subdirectorios.descargable import Descargable
 from archivista.seccion_subdirectorios.vinculo_relativo import VinculoRelativo
 
 
-class Subdirectorio(object):
+class Subdirectorio():
     """ Subdirectorio """
 
     def __init__(self, config, ruta, nivel):
@@ -42,7 +45,7 @@ class Subdirectorio(object):
             # Levantar la bandera
             self.ya_alimentado = True
         # Entregar verdadero si hay
-        return(self.contenidos is not None)
+        return self.contenidos is not None
 
     def contenido(self):
         """ Contenido entrega texto markdown """
@@ -62,13 +65,13 @@ class Subdirectorio(object):
                     for item in self.contenidos:
                         lineas.append(item.contenido())
                     lineas.append('')
-            return('\n'.join(lineas))
-        else:
-            return('')
+            return '\n'.join(lineas)
+        return ''
 
     def __repr__(self):
+        """ Representación """
         lineas = []
         lineas.append(f'<Subdirectorio> {self.nombre}')
         if self.contenidos is not None:
             lineas.extend([repr(item) for item in self.contenidos])
-        return('  ' * self.nivel + '\n'.join(lineas))
+        return '  ' * self.nivel + '\n'.join(lineas)

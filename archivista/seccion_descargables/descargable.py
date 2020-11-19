@@ -4,7 +4,7 @@ Archivista, Sección Descargables, Descargable
 from pathlib import Path
 
 
-class Descargable(object):
+class Descargable():
     """ Descargable """
 
     def __init__(self, config, ruta, nivel):

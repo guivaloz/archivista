@@ -1,7 +1,10 @@
+"""
+Archivista, Sección Final, ArchivoMd
+"""
 from pathlib import Path
 
 
-class ArchivoMd(object):
+class ArchivoMd():
     """ Archivo md """
 
     def __init__(self, config, ruta, nivel):
@@ -25,15 +28,15 @@ class ArchivoMd(object):
             # Levantar bandera
             self.ya_alimentado = True
         # Entregar verdadero si hay
-        return(self.archivo_md_ruta is not None)
+        return self.archivo_md_ruta is not None
 
     def contenido(self):
         """ Contenido entrega texto markdown """
         if self.ya_alimentado and self.archivo_md_ruta is not None:
             with open(str(self.archivo_md_ruta), 'r') as puntero:
-                return(puntero.read())
-        else:
-            return('')
+                return puntero.read()
+        return ''
 
     def __repr__(self):
-        return('  ' * self.nivel + f'<ArchivoMd> {self.archivo_md_nombre}')
+        """ Representación """
+        return '  ' * self.nivel + f'<ArchivoMd> {self.archivo_md_nombre}'

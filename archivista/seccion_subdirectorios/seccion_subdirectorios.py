@@ -1,9 +1,12 @@
+"""
+Archivista, Sección Subdirectorios, SeccionSubdirectorios
+"""
 import re
 from pathlib import Path
 from archivista.seccion_subdirectorios.subdirectorio import Subdirectorio
 
 
-class SeccionSubdirectorios(object):
+class SeccionSubdirectorios():
     """ Seccion Subdirectorios """
 
     def __init__(self, config, ruta, nivel):
@@ -45,6 +48,7 @@ class SeccionSubdirectorios(object):
                     yield from self.rastrear_directorios(item, nivel + 1)
 
     def alimentar(self):
+        """ Alimentar """
         if self.ya_alimentado is False:
             # Rastrear subdirectorios
             subdirectorios = []
@@ -62,22 +66,22 @@ class SeccionSubdirectorios(object):
             # Levantar la bandera
             self.ya_alimentado = True
         # Entregar verdadero si hay
-        return(self.contenidos is not None)
+        return self.contenidos is not None
 
     def contenido(self):
         """ Contenido entrega texto markdown """
         if self.contenidos is not None:
-            return('\n'.join([subdirectorio.contenido() for subdirectorio in self.contenidos]))
-        else:
-            return('SIN SUBDIRECTORIOS')  # Esto no debería entregarse
+            return '\n'.join([subdirectorio.contenido() for subdirectorio in self.contenidos])
+        return 'SIN SUBDIRECTORIOS'  # Esto no debería entregarse
 
     def metadatos(self):
         """ Metadatos entrega un diccionario, esta clase no los genera """
-        return({})
+        return {}
 
     def __repr__(self):
+        """ Representación """
         lineas = []
         lineas.append(f'<SeccionSubdirectorios> {self.mensaje}')
         if self.contenidos is not None:
             lineas.extend([repr(subdirectorio) for subdirectorio in self.contenidos])
-        return('  ' * self.nivel + '\n'.join(lineas))
+        return '  ' * self.nivel + '\n'.join(lineas)

@@ -4,7 +4,7 @@ from pathlib import Path
 from archivista.universales.funciones import validar_rama
 
 
-class Config(object):
+class Config():
 
     def __init__(self):
         self.rama = ''

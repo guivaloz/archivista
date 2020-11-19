@@ -3,6 +3,8 @@ Archivista, Sección Inicial, ArchivoMdInicial
 """
 from pathlib import Path
 
+METADATOS_VALIDOS = ['title', 'summary', 'category', 'tags', 'date', 'modified', 'status', 'preview']
+
 
 class ArchivoMdInicial():
     """ Archivo md inicial """
@@ -50,10 +52,10 @@ class ArchivoMdInicial():
                 with open(str(self.archivo_md_ruta), 'r') as puntero:
                     renglones = puntero.readlines()
                     for numero, linea in enumerate(renglones):
-                        kv = linea.split(':', 1)
-                        if len(kv) == 2 and kv[0].lower() in ['title', 'summary', 'category', 'date', 'modified', 'status']:
-                            variable = kv[0].lower()
-                            valor = kv[1].strip()
+                        pareja = linea.split(':', 1)
+                        if len(pareja) == 2 and pareja[0].lower() in METADATOS_VALIDOS:
+                            variable = pareja[0].lower()
+                            valor = pareja[1].strip()
                             self.procesado_metadatos[variable] = valor
                         else:
                             self.procesado_contenido = ''.join(renglones[numero:])

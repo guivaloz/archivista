@@ -1,11 +1,21 @@
 # Archivista
 
-Transformador de contenidos a la estructura y metadatos que requiere Pelican;
-así puede mantenerse un depósito en la nube con directorios y archivos
+Transformador de contenidos a la estructura y metadatos que requiere **Pelican;**
+así puede mantenerse un depósito _sencillo_ en la nube con directorios y archivos
 para generar los directorios y archivos en _content_.
+
+Ofrece la ventaja de determinar los metadatos a falta de éstos; por ejemplo,
+si no se tiene un _Title_ se toma el nombre del archivo MD. También destaca por
+crear índices _automáticos_ cuando se colocan documentos PDF o páginas MD en directorios.
+
+Además identifica archivos _descargables_ como PDF, XLSX, DOCX, etc. El propósito de esto
+es que el conjunto de páginas, imágenes y archivos web (JPG, PNG, GIF, etc.)
+se suban a un servicio de hospedaje gratuito (por ejemplo GitHub) y lo más pesado
+a un _almacén frío_ como **Google Storage**.
 
 ## Historial de versiones
 
+- 0.4.3 Metadato "Preview" para imágenes previas de artículos
 - 0.4.2 Cuando hay un elemento se omite el breadcrumb
 - 0.4.1 Breadcrumb
 - 0.3.8 Los subdirectorios con fecha la pueden tener en cualquier parte

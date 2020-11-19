@@ -1,8 +1,11 @@
+"""
+Archivista, Sección Subdirectorios, VinculoRelativo
+"""
 from pathlib import Path
 from archivista.universales.funciones import cambiar_a_ruta_segura
 
 
-class VinculoRelativo(object):
+class VinculoRelativo():
     """ VinculoRelativo """
 
     def __init__(self, config, ruta, nivel):
@@ -29,17 +32,15 @@ class VinculoRelativo(object):
             # Levantar la bandera
             self.ya_alimentado = True
         # Entregar verdadero si hay
-        return(self.relativo is not None)
+        return self.relativo is not None
 
     def contenido(self):
         """ Contenido entrega texto markdown """
         if self.ya_alimentado and self.relativo is not None:
-            return(f'- [{self.etiqueta}]({self.relativo})')
-        else:
-            return('')
+            return f'- [{self.etiqueta}]({self.relativo})'
+        return ''
 
     def __repr__(self):
         if self.ya_alimentado and self.relativo is not None:
-            return('  ' * self.nivel + f'<VinculoRelativo> {self.relativo}')
-        else:
-            return('  ' * self.nivel + '<VinculoRelativo>')
+            return '  ' * self.nivel + f'<VinculoRelativo> {self.relativo}'
+        return '  ' * self.nivel + '<VinculoRelativo>'
