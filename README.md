@@ -15,6 +15,7 @@ a un _almacén frío_ como **Google Storage**.
 
 ## Historial de versiones
 
+- 0.4.4 Marca error si la rama no está configurada
 - 0.4.3 Metadato "Preview" para imágenes previas de artículos
 - 0.4.2 Cuando hay un elemento se omite el breadcrumb
 - 0.4.1 Breadcrumb

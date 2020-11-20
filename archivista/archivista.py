@@ -10,8 +10,8 @@ from archivista.universales.rama import Rama
 @click.group()
 @pass_config
 def cli(config):
-    """ Grupo de órdenes click """
-    click.echo('Archivista versión 0.4.3')
+    """ Archivista es un transformador de contenidos a la estructura y metadatos que requiere Pelican. """
+    click.echo('Versión 0.4.4')
 
 
 @cli.command()
@@ -29,8 +29,8 @@ def mostrar(config, rama):
             rama = Rama(config)
             rama.alimentar()
             click.echo(repr(rama))
-    except Exception as e:
-        click.echo(str(e))
+    except Exception as error:
+        click.echo(str(error))
         sys.exit(1)
     sys.exit(0)
 
@@ -50,8 +50,8 @@ def crear(config, rama):
             rama = Rama(config)
             rama.alimentar()
             click.echo(rama.crear())
-    except Exception as e:
-        click.echo(str(e))
+    except Exception as error:
+        click.echo(str(error))
         sys.exit(1)
     sys.exit(0)
 
