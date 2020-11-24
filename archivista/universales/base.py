@@ -34,9 +34,10 @@ class Base():
         """ Alimentar """
         if self.ya_alimentado is False:
             # Sección Breadcrumb
-            seccion_breadcrumb = SeccionBreadcrumb(self.config, self.ruta, self.nivel + 1)
-            if seccion_breadcrumb.alimentar():
-                self.secciones.append(seccion_breadcrumb)
+            if self.config.breadcrumb:
+                seccion_breadcrumb = SeccionBreadcrumb(self.config, self.ruta, self.nivel + 1)
+                if seccion_breadcrumb.alimentar():
+                    self.secciones.append(seccion_breadcrumb)
             # Sección Inicial
             seccion_inicial = SeccionInicial(self.config, self.ruta, self.nivel + 1)
             if seccion_inicial.alimentar():

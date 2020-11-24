@@ -27,7 +27,7 @@ class Descargable():
     def contenido(self):
         """ Contenido entrega texto markdown """
         if self.ya_alimentado:
-            url = self.config.almacen_frio_url + str(self.ruta)[len(self.config.nextcloud_ruta):]
+            url = self.config.almacen_frio_url + str(self.ruta)[len(str(self.config.nextcloud_ruta)):]
             return f'- [{self.nombre}]({url})'
         return ''
 

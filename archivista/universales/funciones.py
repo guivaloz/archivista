@@ -33,7 +33,9 @@ def cambiar_a_identificador(text):
 
 def validar_rama(rama=''):
     """ Validar rama """
-    return rama.lower()
+    if rama.strip() == '':
+        raise Exception('ERROR: Falta el nombre de la rama.')
+    return rama.strip().lower()
 
 
 def obtener_metadatos_del_nombre(nombre, fecha_hora_por_defecto):

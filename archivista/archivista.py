@@ -10,8 +10,8 @@ from archivista.universales.rama import Rama
 @click.group()
 @pass_config
 def cli(config):
-    """ Archivista es un transformador de contenidos a la estructura y metadatos que requiere Pelican. """
-    click.echo('Versión 0.4.4')
+    """ Archivista es un elaborador de contenidos para Pelican. """
+    click.echo('Versión 0.4.5')
 
 
 @cli.command()
@@ -25,7 +25,8 @@ def mostrar(config, rama):
         else:
             ramas = [rama]
         for rama in ramas:
-            config.cargar_configuraciones(rama)
+            config.cargar(rama)
+            config.validar()
             rama = Rama(config)
             rama.alimentar()
             click.echo(repr(rama))
@@ -46,7 +47,8 @@ def crear(config, rama):
         else:
             ramas = [rama]
         for rama in ramas:
-            config.cargar_configuraciones(rama)
+            config.cargar(rama)
+            config.validar()
             rama = Rama(config)
             rama.alimentar()
             click.echo(rama.crear())
