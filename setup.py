@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf8") as puntero:
 
 setuptools.setup(
     name="archivista",
-    version="0.4.5",
+    version="0.4.6",
     author="Guillermo Valdes Lozano",
     author_email="guillermo@movimientolibre.com",
     description="Transformador de contenidos para Pelican",
