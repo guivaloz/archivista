@@ -4,8 +4,8 @@ Archivista, Sección Final, ArchivoMd
 from pathlib import Path
 
 
-class ArchivoMd():
-    """ Archivo md """
+class ArchivoMd:
+    """Archivo md"""
 
     def __init__(self, config, ruta, nivel):
         self.config = config
@@ -19,7 +19,7 @@ class ArchivoMd():
         self.archivo_md_ruta = None
 
     def alimentar(self):
-        """ Alimentar """
+        """Alimentar"""
         if self.ya_alimentado is False:
             # Verificar que exista el archivo
             if self.ruta.exists() and self.ruta.is_file():
@@ -31,12 +31,12 @@ class ArchivoMd():
         return self.archivo_md_ruta is not None
 
     def contenido(self):
-        """ Contenido entrega texto markdown """
+        """Contenido entrega texto markdown"""
         if self.ya_alimentado and self.archivo_md_ruta is not None:
-            with open(str(self.archivo_md_ruta), 'r') as puntero:
+            with open(str(self.archivo_md_ruta), "r", encoding="utf8") as puntero:
                 return puntero.read()
-        return ''
+        return ""
 
     def __repr__(self):
-        """ Representación """
-        return '  ' * self.nivel + f'<ArchivoMd> {self.archivo_md_nombre}'
+        """Representación"""
+        return "  " * self.nivel + f"<ArchivoMd> {self.archivo_md_nombre}"
