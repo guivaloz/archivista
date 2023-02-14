@@ -1,29 +1,29 @@
 import setuptools
 
-with open('README.md', 'r') as puntero:
+with open("README.md", "r", encoding="utf8") as puntero:
     long_description = puntero.read()
 
 setuptools.setup(
-    name='archivista',
-    version='0.4.5',
-    author='Guillermo Valdes Lozano',
-    author_email='guillermo@movimientolibre.com',
-    description='Transformador de contenidos para Pelican',
+    name="archivista",
+    version="0.4.6",
+    author="Guillermo Valdes Lozano",
+    author_email="guillermo@movimientolibre.com",
+    description="Transformador de contenidos para Pelican",
     long_description=long_description,
-    long_description_content_type='text/markdown',
-    url='https://github.com/guivaloz/archivista',
-    python_requires='>=3.6',
+    long_description_content_type="text/markdown",
+    url="https://github.com/guivaloz/archivista",
+    python_requires=">=3.6",
     classifiers=[
-        'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
-        'Operating System :: POSIX :: Linux',
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+        "Operating System :: POSIX :: Linux",
     ],
     packages=setuptools.find_packages(),
     include_package_data=True,
     install_requires=[
-        'click',
-        'Jinja2',
-        'Markdown',
+        "click",
+        "Jinja2",
+        "Markdown",
     ],
     entry_points="""
         [console_scripts]

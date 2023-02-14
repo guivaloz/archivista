@@ -13,8 +13,8 @@ from archivista.seccion_subdirectorios.seccion_subdirectorios import SeccionSubd
 from archivista.seccion_final.seccion_final import SeccionFinal
 
 
-class Base():
-    """ Base """
+class Base:
+    """Base"""
 
     def __init__(self, config, ruta):
         self.config = config
@@ -28,10 +28,10 @@ class Base():
         self.oculto = True  # Si verdadero pondrá el estatus en Draft
         self.plantilla = None
         # Definir la ruta relativa donde estamos respecto al depósito
-        self.relativo = str(self.ruta)[len(str(self.config.nextcloud_ruta)):]
+        self.relativo = str(self.ruta)[len(str(self.config.nextcloud_ruta)) :]
 
     def alimentar(self):
-        """ Alimentar """
+        """Alimentar"""
         if self.ya_alimentado is False:
             # Sección Breadcrumb
             if self.config.breadcrumb:
@@ -59,69 +59,77 @@ class Base():
         return len(self.secciones) > 0
 
     def contenido(self):
-        """ Entregar el contenido de todas las secciones """
+        """Entregar el contenido de todas las secciones"""
         if len(self.secciones) > 0:
-            return '\n'.join([seccion.contenido() for seccion in self.secciones])
-        return 'NO HAY CONTENIDO'  # Esto no debería entregarse
+            return "\n".join([seccion.contenido() for seccion in self.secciones])
+        return "NO HAY CONTENIDO"  # Esto no debería entregarse
 
     def metadatos(self):
-        """ Metadatos entrega un diccionario si los tiene """
+        """Metadatos entrega un diccionario si los tiene"""
         # Primero a partir del nombre del archivo
         categoria = self.config.titulo
         nombre = self.ruta.parts[-1]
         creado, titulo = obtener_metadatos_del_nombre(nombre, self.config.fecha_por_defecto)
         modificado = creado
         slug = cambiar_a_identificador(self.relativo[1:])  # Le quitamos el primer caracter que siempre es una diagonal
-        url = cambiar_a_ruta_segura(self.relativo[1:] + '/')
-        guardar_como = url + 'index.html'
+        url = cambiar_a_ruta_segura(self.relativo[1:] + "/")
+        guardar_como = url + "index.html"
         if self.oculto:
-            estado = 'draft'
+            estado = "draft"
         else:
-            estado = ''
-        resumen = ''
-        previa = ''
-        etiquetas = ''
+            estado = ""
+        resumen = ""
+        previa = ""
+        etiquetas = ""
+        javascripts = ""
+        stylesheets = ""
         # Segundo a partir de las líneas en el archivo md
         for seccion in self.secciones:
             metadatos = seccion.metadatos()
-            if 'title' in metadatos:
-                titulo = metadatos['title']
-            if 'summary' in metadatos:
-                resumen = metadatos['summary']
-            if 'category' in metadatos:
-                categoria = metadatos['category']
-            if 'date' in metadatos:
-                creado = modificado = metadatos['date']
-            if 'modified' in metadatos:
-                modificado = metadatos['modified']
-            if 'status' in metadatos:
-                estado = metadatos['status']
-            if 'preview' in metadatos:
-                previa = metadatos['preview']
-            if 'tags' in metadatos:
-                etiquetas = metadatos['tags']
+            if "title" in metadatos:
+                titulo = metadatos["title"]
+            if "summary" in metadatos:
+                resumen = metadatos["summary"]
+            if "category" in metadatos:
+                categoria = metadatos["category"]
+            if "date" in metadatos:
+                creado = modificado = metadatos["date"]
+            if "modified" in metadatos:
+                modificado = metadatos["modified"]
+            if "status" in metadatos:
+                estado = metadatos["status"]
+            if "preview" in metadatos:
+                previa = metadatos["preview"]
+            if "tags" in metadatos:
+                etiquetas = metadatos["tags"]
+            if "javascripts" in metadatos:
+                javascripts = metadatos["javascripts"]
+            if "stylesheets" in metadatos:
+                stylesheets = metadatos["stylesheets"]
         # Entregar
         return {
-            'title': titulo,
-            'slug': slug,
-            'summary': resumen,
-            'category': categoria,
-            'tags': etiquetas,
-            'url': url,
-            'save_as': guardar_como,
-            'date': creado,
-            'modified': modificado,
-            'status': estado,
-            'preview': previa,
+            "title": titulo,
+            "slug": slug,
+            "summary": resumen,
+            "category": categoria,
+            "tags": etiquetas,
+            "url": url,
+            "save_as": guardar_como,
+            "date": creado,
+            "modified": modificado,
+            "status": estado,
+            "preview": previa,
+            "javascripts": javascripts,
+            "stylesheets": stylesheets,
         }
 
     def preparar_plantilla(self):
-        """ Preparar la plantilla Jinja2 """
+        """Preparar la plantilla Jinja2"""
         if self.plantilla is None:
             # Preparar plantilla
             plantillas_ruta = Path(self.config.plantillas_ruta)
-            if not(plantillas_ruta.exists() or plantillas_ruta.is_dir()):
-                raise Exception('ERROR: No existe el directorio de plantillas')
+            if not (plantillas_ruta.exists() or plantillas_ruta.is_dir()):
+                raise Exception("ERROR: No existe el directorio de plantillas")
             plantillas_env = Environment(
                 loader=FileSystemLoader(str(plantillas_ruta)),
                 trim_blocks=True,
@@ -130,29 +138,29 @@ class Base():
             self.plantilla = plantillas_env.get_template(self.config.plantilla)
 
     def crear(self):
-        """ Crear archivo md """
+        """Crear archivo md"""
         # Elaborar contenido con la plantilla
         if self.plantilla is None:
             self.preparar_plantilla()
         ingredientes = self.metadatos()  # Entrega un diccionario
-        ingredientes['content'] = self.contenido()
+        ingredientes["content"] = self.contenido()
         cocinado = self.plantilla.render(**ingredientes)
         # Crear directorio
         destino_directorio_ruta = Path(str(self.config.salida_ruta) + cambiar_a_ruta_segura(self.relativo))
         destino_directorio_ruta.mkdir(parents=True, exist_ok=True)
         # Escribir archivo md
         nombre = cambiar_a_ruta_segura(self.ruta.parts[-1])
-        destino_md_ruta = Path(destino_directorio_ruta, f'{nombre}.md')
-        with open(destino_md_ruta, 'w') as puntero:
+        destino_md_ruta = Path(destino_directorio_ruta, f"{nombre}.md")
+        with open(destino_md_ruta, "w", encoding="utf8") as puntero:
             puntero.write(cocinado)
         # Copiar imágenes
         imagenes_rutas = []
         for extension in self.config.imagenes_extensiones:
-            imagenes_rutas.extend(list(self.ruta.glob(f'*.{extension}')))
+            imagenes_rutas.extend(list(self.ruta.glob(f"*.{extension}")))
         for imagen_ruta in imagenes_rutas:
             shutil.copyfile(imagen_ruta, Path(destino_directorio_ruta, imagen_ruta.name))
         # Entregar línea para la terminal
-        return str(destino_md_ruta)[len(str(self.config.salida_ruta)):]
+        return str(destino_md_ruta)[len(str(self.config.salida_ruta)) :]
 
     def __repr__(self):
-        return '  ' * self.nivel + f'<Base> {self.relativo}'
+        return "  " * self.nivel + f"<Base> {self.relativo}"

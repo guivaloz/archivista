@@ -7,8 +7,14 @@ URL: {{ url }}
 Save_As: {{ save_as }}
 Date: {{ date }}
 Modified: {{ modified }}
-{% if preview != '' %}Preview: {{ preview }}{% endif %}
-{% if status != '' %}Status: {{ status }}{% endif %}
+{% if preview != '' %}Preview: {{ preview }}
+{% endif %}
+{% if status != '' %}Status: {{ status }}
+{% endif %}
+{% if javascripts != '' %}JavaScripts: {{ javascripts }}
+{% endif %}
+{% if stylesheets != '' %}Stylesheets: {{ stylesheets }}
+{% endif %}
 
 
 {{ content }}
