@@ -15,6 +15,7 @@ a un _almacén frío_ como **Google Storage**.
 
 ## Historial de versiones
 
+- 0.5.1 Listas blancas y negras de URLs
 - 0.4.6 Metadatos JavaScripts Stylesheets
 - 0.4.5 Mejor configuración y breadcrumb se puede deshabilitar
 - 0.4.4 Marca error si la rama no está configurada
@@ -32,7 +33,7 @@ a un _almacén frío_ como **Google Storage**.
 - 0.2.0 Obtener los metadatos desde un archivo CSV
 - 0.1.0 Primeros experimentos
 
-## Configuración
+## Configurar
 
 Debe crear un archivo `settings.ini` con las opciones
 
@@ -43,3 +44,43 @@ Debe crear un archivo `settings.ini` con las opciones
 - imagenes_extensiones:
 - indice_maximo_elementos_como_encabezado:
 - nextcloud_ruta:
+
+## Instalar
+
+Para instalar desde PyPi ejecutar
+
+```bash
+pip install archivista
+```
+
+Para instalar con las fuentes de este repositorio
+
+```bash
+pip install .
+```
+
+Mostrar la ayuda con
+
+```bash
+archivista --help
+```
+
+## Demostracion
+
+Vaya al directorio tests
+
+```bash
+cd tests
+```
+
+Ejecute **mostrar** que pone en pantalla las representaciones de cada objeto
+
+```bash
+archivista mostrar
+```
+
+Ejecute **crear**
+
+```bash
+archivista crear
+```

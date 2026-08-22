@@ -11,7 +11,7 @@ from archivista.universales.rama import Rama
 @pass_config
 def cli(config):
     """ Archivista es un elaborador de contenidos para Pelican. """
-    click.echo('Versión 0.4.5')
+    click.echo('Versión 0.5.1')
 
 
 @cli.command()
